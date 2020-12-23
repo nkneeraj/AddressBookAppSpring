@@ -10,6 +10,7 @@ import com.cg.addressbookapp.addressbookdto.AddressBookDTO;
 import com.cg.addressbookapp.exception.AddressBookException;
 import com.cg.addressbookapp.models.AddressBookData;
 import com.cg.addressbookapp.repository.IAddressBookRespository;
+import com.google.common.base.Optional;
 
 @Service
 public class AddressBookService implements IAddressBookService {
@@ -49,5 +50,13 @@ public class AddressBookService implements IAddressBookService {
 	@Override
 	public List<AddressBookData> getAllAddressBookData() {
 		return addressBookRepository.findAll();
+	}
+
+	@Override
+	public List<AddressBookData> getPersonByCity(String city) {
+		List<AddressBookData> dataList = addressBookRepository.findBycity(city);
+		System.out.println(dataList);
+		return dataList;
+//		return List<AddressBookData> addressBookRepository.findBycity(city);
 	}
 }

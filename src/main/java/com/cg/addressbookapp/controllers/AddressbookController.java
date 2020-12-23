@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.addressbookapp.addressbookdto.AddressBookDTO;
@@ -20,6 +21,7 @@ import com.cg.addressbookapp.addressbookdto.ResponseDTO;
 import com.cg.addressbookapp.exception.AddressBookException;
 import com.cg.addressbookapp.models.AddressBookData;
 import com.cg.addressbookapp.services.IAddressBookService;
+import com.google.common.base.Optional;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -57,16 +59,26 @@ public class AddressbookController {
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.CREATED);
 	}	
 	
-	
 	/**
 	 * Get API: Fetch all Person data from database.
 	 * @return
 	 */
-	
 	@GetMapping(value = {"/","/get"})
 	public ResponseEntity<ResponseDTO> getAddressBookData() {
 		List<AddressBookData> addressDataList = addressBookService.getAllAddressBookData();
 		ResponseDTO respDTO = new ResponseDTO("Get Call Successfull", addressDataList);
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
+	}
+	
+	/**
+	 * @param city
+	 * @return
+	 * @throws AddressBookException
+	 */
+	@GetMapping("/getDataByCity")
+	public ResponseEntity<ResponseDTO> getAddressBookData1(@RequestParam String city) throws AddressBookException{
+		List<AddressBookData> addressBookData = addressBookService.getPersonByCity(city);
+		ResponseDTO responseDTO = new ResponseDTO("Person Data Fetched Successfully", addressBookData);
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 }
