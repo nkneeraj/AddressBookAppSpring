@@ -52,11 +52,38 @@ public class AddressBookService implements IAddressBookService {
 		return addressBookRepository.findAll();
 	}
 
+	/**
+	 *@param city
+	 *@return {@link AddressBookData}
+	 */
 	@Override
 	public List<AddressBookData> getPersonByCity(String city) {
 		List<AddressBookData> dataList = addressBookRepository.findBycity(city);
 		System.out.println(dataList);
 		return dataList;
 //		return List<AddressBookData> addressBookRepository.findBycity(city);
+	}
+
+	/**
+	 *@return {@link AddressBookDTO}
+	 *throws AddressBookException
+	 */
+	@Override
+	public AddressBookData deletePersonById(long id) throws AddressBookException {
+		AddressBookData addressBookData = getPersonById(id);
+		addressBookRepository.deleteById(id);
+		return addressBookData;
+	}
+	
+	/**
+	 *@param id
+	 *@return {@link AddressBookData}
+	 *throws AddressBookException
+	 */
+	@Override
+	public AddressBookData updatePersonById(long id, AddressBookDTO addressBookDTO) throws AddressBookException {
+		AddressBookData addressBookData = getPersonById(id);
+		modelMapper.map(addressBookDTO, addressBookData);
+		return addressBookRepository.save(getPersonById(id));
 	}
 }

@@ -3,6 +3,7 @@ package com.cg.addressbookapp.services;
 import java.util.List;
 
 import com.cg.addressbookapp.addressbookdto.AddressBookDTO;
+import com.cg.addressbookapp.addressbookdto.ResponseDTO;
 import com.cg.addressbookapp.exception.AddressBookException;
 import com.cg.addressbookapp.models.AddressBookData;
 import com.google.common.base.Optional;
@@ -16,4 +17,8 @@ public interface IAddressBookService {
 	public List<AddressBookData> getAllAddressBookData();
 
 	public List<AddressBookData> getPersonByCity(String city);
+
+	public AddressBookData deletePersonById(long id) throws AddressBookException;
+
+	AddressBookData updatePersonById(long id, AddressBookDTO addressBookDTO) throws AddressBookException;
 }
